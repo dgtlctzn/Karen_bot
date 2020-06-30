@@ -11,13 +11,12 @@ from datetime import datetime
 class TweetBot:
 
     def __init__(self):
-        Twitter = pickle.load(open('/home/pi/PiPy/karen_secret_twitter_credentials.pkl', 'rb'))
-        twitter_api = twitter.api.Api(consumer_key=Twitter['Consumer Key'],
-                                      consumer_secret=Twitter['Consumer Secret'],
-                                      access_token_key=Twitter['Access Token'],
-                                      access_token_secret=Twitter['Access Token Secret'],
-                                      tweet_mode='extended'
-                                      )
+        twit_dict = pickle.load(open('/home/pi/PiPy/karen_secret_twitter_credentials.pkl', 'rb'))
+        twitter_api = twitter.api.Api(consumer_key=twit_dict['Consumer Key'],
+                                      consumer_secret=twit_dict['Consumer Secret'],
+                                      access_token_key=twit_dict['Access Token'],
+                                      access_token_secret=twit_dict['Access Token Secret'],
+                                      tweet_mode='extended')
         self._twitter_api = twitter_api
 
     def post(self, tweet):
@@ -64,8 +63,8 @@ def bad_review(review_text, structure_text, chains, weight=(1, 10)):
     combo_model = markovify.combine([my_model, my_model_2], weight)
 
     restaurant_sent = combo_model.make_short_sentence(80, min_chars=60, tries=100)
-    my_tweet = chains[randint(1, 8)] + " I'd like to speak to the manager. " + restaurant_sent + hash_one + hash_two \
-        + ' #karen' + ' #karensgonewild'
+    my_tweet = " I'd like to speak to the manager. " + chains[randint(1, 8)] + ' ' + restaurant_sent + hash_one \
+               + hash_two + ' #karen' + ' #karensgonewild'
     return my_tweet
 
 
@@ -86,15 +85,15 @@ def main():
     if number == 1:
         chains = {1: "@Chilis", 2: "@olivegarden", 3: "@Applebees", 4: '@Cheesecake', 5: "@Carrabbas",
                   6: "@PFChangs", 7: "@Maggianos", 8: "@redlobster"}
-        text_1 = '/home/pi/PiPy/Karen_text2.txt'
-        text_2 = '/home/pi/PiPy/Karen_rest_structure.txt'
+        text_1 = 'Karen_text2.txt'
+        text_2 = 'Karen_rest_structure.txt'
         tb = TweetBot()
         tb.post(bad_review(text_1, text_2, chains))
     elif number == 2:
         chains = {1: "@Sephora", 2: "@Target", 3: "@jcpenney", 4: "@tjmaxx", 5: "@marshalls",
                   6: "@Walmart", 7: "@Bloomingdales", 8: "@Macys"}
-        text_1 = '/home/pi/PiPy/Karen_retail2.txt'
-        text_2 = '/home/pi/PiPy/Karen_retail_structure.txt'
+        text_1 = 'Karen_retail2.txt'
+        text_2 = 'Karen_retail_structure.txt'
         tb = TweetBot()
         tb.post(bad_review(text_1, text_2, chains))
     elif number == 3:
@@ -120,11 +119,11 @@ except twitter.error.TwitterError:
     back_up = {1: 'God bless the troops and the law enforcement keeping us safe! #america',
                2: 'Living, Laughing, and Loving Life #blessed',
                3: '@BarefootWine Time for a glass of that delicious chardonnay :)'}
-    tb = TweetBot()
-    tb.post(back_up[randint(1, 3)])
+    etb = TweetBot()
+    etb.post(back_up[randint(1, 3)])
 except requests.exceptions.ConnectionError as e:
-    with open('/home/pi/PiPy/karen_error.csv', 'a') as err_file:
+    with open('karen_error.csv', 'a') as err_file:
         err_file.write(f'internet outage at {datetime.now()} \n')
 except Exception as f:
-    with open('/home/pi/PiPy/karen_error.csv', 'a') as err_file:
+    with open('karen_error.csv', 'a') as err_file:
         err_file.write(str(f) + str(datetime.now()) + '\n')
