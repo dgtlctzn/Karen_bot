@@ -1,6 +1,3 @@
-# Karen_bot
-A Twitter bot based on the Karen memes
-=======
 # Karen Twitter Bot
 A Twitter bot based on the Karen memes. The python-twitter module handles the twitter api.
 
