@@ -63,7 +63,7 @@ def bad_review(review_text, structure_text, chains, weight=(1, 10)):
     combo_model = markovify.combine([my_model, my_model_2], weight)
 
     restaurant_sent = combo_model.make_short_sentence(80, min_chars=60, tries=100)
-    my_tweet = " I'd like to speak to the manager. " + chains[randint(1, 8)] + ' ' + restaurant_sent + hash_one \
+    my_tweet = "I'd like to speak to the manager. " + chains[randint(1, 8)] + ' ' + restaurant_sent + hash_one \
                + hash_two + ' #karen' + ' #karensgonewild'
     return my_tweet
 
