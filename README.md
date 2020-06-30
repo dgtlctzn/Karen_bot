@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Karen_bot
 A Twitter bot based on the Karen memes
 =======
@@ -20,4 +19,3 @@ A twitter account is retweeted from a selected list of twitter accounts.
 
 ### Recipes
 BeautifulSoup is used to scrape html links from allrecipes.com. Random.randint selects one of the recipes that includes "ranch", "bacon", or "potato salad" as an ingredient. 
->>>>>>> 915014880a9b2499d1b71125e1acaa13bb785cc9
