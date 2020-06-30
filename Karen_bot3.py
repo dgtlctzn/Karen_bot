@@ -11,7 +11,7 @@ from datetime import datetime
 class TweetBot:
 
     def __init__(self):
-        twit_dict = pickle.load(open('/home/pi/PiPy/karen_secret_twitter_credentials.pkl', 'rb'))
+        twit_dict = pickle.load(open('karen_secret_twitter_credentials.pkl', 'rb'))
         twitter_api = twitter.api.Api(consumer_key=twit_dict['Consumer Key'],
                                       consumer_secret=twit_dict['Consumer Secret'],
                                       access_token_key=twit_dict['Access Token'],
