@@ -8,7 +8,7 @@ import bs4
 from datetime import datetime
 
 
-class TweetBot:
+class Karen:
 
     def __init__(self):
         Twitter = pickle.load(open('karen_secret_twitter_credentials.pkl', 'rb'))
@@ -28,9 +28,6 @@ class TweetBot:
         retweet = api.GetUserTimeline(user, count=1)
         retweet_id = retweet[0].AsDict()['id']
         api.PostRetweet(retweet_id)
-
-
-class Karen(TweetBot):
 
     @staticmethod
     def _corp_creator(file, read_type='rt'):
@@ -105,8 +102,8 @@ except twitter.error.TwitterError:
     back_up = {1: 'God bless the troops and the law enforcement keeping us safe! #america',
                2: 'Living, Laughing, and Loving Life #blessed',
                3: '@BarefootWine Time for a glass of that delicious chardonnay :)'}
-    tb = TweetBot()
-    tb.post(back_up[randint(1, 3)])
+    ken = Karen()
+    ken.post(back_up[randint(1, 3)])
 except requests.exceptions.ConnectionError as e:
     with open('karen_error.txt', 'a') as err_file:
         err_file.write(f'internet outage at {datetime.now()} \n')
