@@ -30,12 +30,24 @@ class Karen:
         api.PostRetweet(retweet_id)
 
     @staticmethod
-    def _corp_creator(file, read_type='rt'):
+    def corp_creator(file, read_type='rt'):
         with open(file, read_type) as txt_file:
             raw_text = txt_file.read()
             corp = nltk.sent_tokenize(raw_text)
             text_model = markovify.Text(corp)
             return text_model
+
+    @staticmethod
+    def add_reviews(url, file_nm):
+        my_url = url
+        page = requests.get(my_url)
+
+        soup = bs4.BeautifulSoup(page.content, 'html.parser')
+        results = soup.find_all('span', class_='lemon--span__373c0__3997G raw__373c0__3rKqk')
+
+        with open(file_nm, 'a') as karen_txt:
+            for i in results:
+                karen_txt.write(str(i).split('>')[1] + '\n')
 
     def bad_review(self, review_text, structure_text, chains, weight=(1, 10)):
         hashtags = [' #disappointing', ' #crap', ' #nevercomingback', ' #theworst', ' #livelaughlove...andleave',
@@ -44,10 +56,10 @@ class Karen:
         hash_one = hashtags[hash_num_1]
         hash_two = hashtags[hash_num_1 - randint(1, 3)]
 
-        km = self._corp_creator(review_text)
-        mm = self._corp_creator(structure_text)
+        model_1 = self.corp_creator(review_text)
+        model_2 = self.corp_creator(structure_text)
 
-        combo_model = markovify.combine([km, mm], weight)
+        combo_model = markovify.combine([model_1, model_2], weight)
 
         restaurant_sent = combo_model.make_short_sentence(80, min_chars=60, tries=100)
         my_tweet = "I'd like to speak to the manager. " + chains[randint(1, 8)] + ' ' + restaurant_sent + hash_one \
@@ -95,18 +107,19 @@ class Karen:
             self.post('YUM!' + share_recipe.strip("'"))
 
 
-try:
-    karen = Karen()
-    karen.complain()
-except twitter.error.TwitterError:
-    back_up = {1: 'God bless the troops and the law enforcement keeping us safe! #america',
-               2: 'Living, Laughing, and Loving Life #blessed',
-               3: '@BarefootWine Time for a glass of that delicious chardonnay :)'}
-    ken = Karen()
-    ken.post(back_up[randint(1, 3)])
-except requests.exceptions.ConnectionError as e:
-    with open('karen_error.txt', 'a') as err_file:
-        err_file.write(f'internet outage at {datetime.now()} \n')
-except Exception as f:
-    with open('karen_error.txt', 'a') as err_file:
-        err_file.write(str(f) + str(datetime.now()) + '\n')
+if __name__ == '__main__':
+    try:
+        karen = Karen()
+        karen.complain()
+    except twitter.error.TwitterError:
+        back_up = {1: 'God bless the troops and the law enforcement keeping us safe! #america',
+                   2: 'Living, Laughing, and Loving Life #blessed',
+                   3: '@BarefootWine Time for a glass of that delicious chardonnay :)'}
+        ken = Karen()
+        ken.post(back_up[randint(1, 3)])
+    except requests.exceptions.ConnectionError as e:
+        with open('karen_error.txt', 'a') as err_file:
+            err_file.write(f'internet outage at {datetime.now()} \n')
+    except Exception as f:
+        with open('karen_error.txt', 'a') as err_file:
+            err_file.write(str(f) + str(datetime.now()) + '\n')
