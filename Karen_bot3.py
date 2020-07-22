@@ -69,7 +69,6 @@ class Karen:
     @staticmethod
     def get_recipe(url):
         my_url = url
-
         page = requests.get(my_url)
 
         soup = bs4.BeautifulSoup(page.content, 'html.parser')
