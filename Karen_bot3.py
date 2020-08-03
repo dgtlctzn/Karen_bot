@@ -10,6 +10,7 @@ from datetime import datetime
 
 class Karen:
 
+    # sets up the twitter api
     def __init__(self):
         twit_dict = pickle.load(open('karen_secret_twitter_credentials.pkl', 'rb'))
         twitter_api = twitter.api.Api(consumer_key=twit_dict['Consumer Key'],
