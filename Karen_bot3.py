@@ -1,11 +1,12 @@
-import markovify
+from markovify import Text, combine
 from random import randint
-import nltk
+from nltk import sent_tokenize
 import pickle
 import twitter
 import requests
-import bs4
+from bs4 import BeautifulSoup
 from datetime import datetime
+import re
 
 
 class Karen:
@@ -32,21 +33,20 @@ class Karen:
     def make_model(file, read_type='rt'):
         with open(file, read_type) as txt_file:
             raw_text = txt_file.read()
-            corpora = nltk.sent_tokenize(raw_text)
-            text_model = markovify.Text(corpora)
+            corpora = sent_tokenize(raw_text)
+            text_model = Text(corpora)
         return text_model
 
     @staticmethod
-    def add_reviews(url, file_nm):
-        my_url = url
-        page = requests.get(my_url)
+    def add_reviews(one_start_url, file_nm):
+        page = requests.get(one_start_url)
 
-        soup = bs4.BeautifulSoup(page.content, 'html.parser')
-        results = soup.find_all('span', class_='lemon--span__373c0__3997G raw__373c0__3rKqk')
+        soup = BeautifulSoup(page.content, 'html.parser')
+        tags = soup.find_all('span', class_='lemon--span__373c0__3997G raw__373c0__3rKqk')
 
         with open(file_nm, 'a') as karen_txt:
-            for i in results:
-                karen_txt.write(str(i).split('>')[1] + '\n')
+            for tag in tags:
+                karen_txt.write(tag.text + '\n')
 
     def bad_review(self, review_text, structure_text, chains, weight=(1, 10)):
         hashtags = [' #disappointing', ' #crap', ' #nevercomingback', ' #theworst', ' #livelaughlove...andleave',
@@ -58,7 +58,7 @@ class Karen:
         model_1 = self.make_model(review_text)
         model_2 = self.make_model(structure_text)
 
-        combo_model = markovify.combine([model_1, model_2], weight)
+        combo_model = combine([model_1, model_2], weight)
 
         restaurant_sent = combo_model.make_short_sentence(80, min_chars=60, tries=100)
         my_tweet = "I'd like to speak to the manager. " + chains[randint(1, 8)] + ' ' + restaurant_sent + hash_one \
@@ -70,11 +70,10 @@ class Karen:
         my_url = url
         page = requests.get(my_url)
 
-        soup = bs4.BeautifulSoup(page.content, 'html.parser')
-        results = soup.find_all('div', class_='fixed-recipe-card__info')
+        soup = BeautifulSoup(page.content, 'html.parser')
+        tags = soup.find_all('div', class_='fixed-recipe-card__info')
 
-        web_dict = {i: str(results[i]).split('href="')[1].split('">')[0] for i in range(0, len(results))}
-        return web_dict
+        return [re.search(r'https(.*)/', str(tag)).group() for tag in tags]
 
     def complain(self):
         number = randint(1, 4)
@@ -99,10 +98,10 @@ class Karen:
             recipe_type = ['https://www.allrecipes.com/search/results/?ingIncl=ranch&sort=re',
                            'https://www.allrecipes.com/search/results/?ingIncl=bacon&sort=re',
                            'https://www.allrecipes.com/search/results/?wt=potato%20salad&sort=re']
-            current_dict = self.get_recipe(recipe_type[recipe_site_num])
-            recipe_num = randint(0, len(current_dict) - 1)
-            share_recipe = current_dict[recipe_num]
-            self.post('YUM!' + share_recipe.strip("'"))
+            current_list = self.get_recipe(recipe_type[recipe_site_num])
+            recipe_num = randint(0, len(current_list) - 1)
+            share_recipe = current_list[recipe_num]
+            self.post('YUM!' + share_recipe)
 
 
 if __name__ == '__main__':
