@@ -37,6 +37,7 @@ class Karen:
             text_model = Text(corpora)
         return text_model
 
+    #create reviews
     @staticmethod
     def add_reviews(one_start_url, file_nm):
         page = requests.get(one_start_url)
