@@ -1,5 +1,6 @@
 # Karen Twitter Bot
 A Twitter bot based on the Karen memes. The python-twitter module handles the twitter api.
+![Karen Bot Pic]()
 
 [@KarenVsManager](https://twitter.com/KarenVsManager)
 
