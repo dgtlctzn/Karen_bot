@@ -12,11 +12,11 @@ import re
 class Karen:
 
     def __init__(self):
-        twit_dict = pickle.load(open('karen_secret_twitter_credentials.pkl', 'rb'))
-        twitter_api = twitter.api.Api(consumer_key=twit_dict['Consumer Key'],
-                                      consumer_secret=twit_dict['Consumer Secret'],
-                                      access_token_key=twit_dict['Access Token'],
-                                      access_token_secret=twit_dict['Access Token Secret'],
+        twitter_keys = pickle.load(open('karen_secret_twitter_credentials.pkl', 'rb'))
+        twitter_api = twitter.api.Api(consumer_key=twitter_keys['Consumer Key'],
+                                      consumer_secret=twitter_keys['Consumer Secret'],
+                                      access_token_key=twitter_keys['Access Token'],
+                                      access_token_secret=twitter_keys['Access Token Secret'],
                                       tweet_mode='extended')
         self._twitter_api = twitter_api
 
