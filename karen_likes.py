@@ -1,5 +1,6 @@
 from Karen_bot3 import Karen
 import sys
+from datetime import datetime
 
 
 class KarenLikes(Karen):
@@ -48,11 +49,15 @@ class KarenLikes(Karen):
 
 
 if __name__ == '__main__':
-    action = sys.argv[1]
-    if action == 'comment':
-        kc = KarenLikes('Karen gone wild', 2)
-        kc.comment_on_posts("I'll be speaking to the manager!")
-    elif action == 'like':
-        kl = KarenLikes('Karen', 10)
-        kl.like_posts()
+    try:
+        action = sys.argv[1]
+        if action == 'comment':
+            kc = KarenLikes('Karen gone wild', 2)
+            kc.comment_on_posts("I'll be speaking to the manager!")
+        elif action == 'like':
+            kl = KarenLikes('Karen', 10)
+            kl.like_posts()
+    except Exception as f:
+        with open('karen_error.txt', 'a') as err_file:
+            err_file.write(str(f) + str(datetime.now()) + '\n')
 
