@@ -52,10 +52,10 @@ if __name__ == '__main__':
     try:
         action = sys.argv[1]
         if action == 'comment':
-            kc = KarenLikes('Karen gone wild', 2)
+            kc = KarenLikes('Karens gone wild', 2)
             kc.comment_on_posts("I'll be speaking to the manager!")
         elif action == 'like':
-            kl = KarenLikes('Karen', 10)
+            kl = KarenLikes('Karens gone wild', 10)
             kl.like_posts()
     except Exception as f:
         with open('karen_error.txt', 'a') as err_file:
