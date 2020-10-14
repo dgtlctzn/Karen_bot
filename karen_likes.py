@@ -51,9 +51,10 @@ class SuperKaren(Karen):
 if __name__ == '__main__':
     try:
         action = sys.argv[1]
+        message = sys.argv[2]
         if action == 'comment':
             kc = SuperKaren('Karens gone wild', 10)
-            kc.comment_on_posts("I'll be speaking to the manager!")
+            kc.comment_on_posts(message)
         elif action == 'like':
             kl = SuperKaren('Karens gone wild', 10)
             kl.like_posts()
