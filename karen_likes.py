@@ -1,6 +1,7 @@
 from Karen_bot3 import Karen
 import sys
 from datetime import date
+from random import randint
 
 
 class SuperKaren(Karen):
@@ -29,14 +30,21 @@ class SuperKaren(Karen):
                                          in_reply_to_status_id=status,
                                          auto_populate_reply_metadata=True)
 
+    @classmethod
+    def comment_message(cls):
+        messages = ["Reported!!!",
+                    "I'll be speaking to the manager about this!",
+                    "I have the right and freedom to complain as a proud American!"]
+        random_num = randint(0, 2)
+        return cls('Karensgonewild', 10).comment_on_posts(messages[random_num])
+
 
 if __name__ == '__main__':
     try:
         action = sys.argv[1]
         message = sys.argv[2]
         if action == 'comment':
-            kc = SuperKaren('Karensgonewild', 10)
-            kc.comment_on_posts(message)
+            SuperKaren.comment_message()
         elif action == 'like':
             kl = SuperKaren('Karensgonewild', 20)
             kl.like_posts()
