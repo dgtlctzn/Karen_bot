@@ -42,7 +42,6 @@ class SuperKaren(Karen):
 if __name__ == '__main__':
     try:
         action = sys.argv[1]
-        message = sys.argv[2]
         if action == 'comment':
             SuperKaren.comment_message()
         elif action == 'like':
