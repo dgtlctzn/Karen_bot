@@ -80,14 +80,14 @@ class Karen:
         if number == 1:
             chains = {1: "@Chilis", 2: "@olivegarden", 3: "@Applebees", 4: '@Cheesecake', 5: "@Carrabbas",
                       6: "@PFChangs", 7: "@Maggianos", 8: "@redlobster"}
-            text_1 = 'Karen_text2.txt'
-            text_2 = 'Karen_rest_structure.txt'
+            text_1 = './text/Karen_text2.txt'
+            text_2 = './text/Karen_rest_structure.txt'
             self.post(self.bad_review(text_1, text_2, chains))
         elif number == 2:
             chains = {1: "@Sephora", 2: "@Target", 3: "@jcpenney", 4: "@tjmaxx", 5: "@marshalls",
                       6: "@Walmart", 7: "@Bloomingdales", 8: "@Macys"}
-            text_1 = 'Karen_retail2.txt'
-            text_2 = 'Karen_retail_structure.txt'
+            text_1 = './text/Karen_retail2.txt'
+            text_2 = './text/Karen_retail_structure.txt'
             self.post(self.bad_review(text_1, text_2, chains))
         elif number == 3:
             user_list = [31869934, 22650211, 2370627199, 26031542, 22515362]

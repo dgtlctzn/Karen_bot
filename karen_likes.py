@@ -1,4 +1,4 @@
-from Karen_bot3 import Karen
+from karen_bot import Karen
 import sys
 from datetime import date
 from random import randint
