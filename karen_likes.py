@@ -22,13 +22,17 @@ class SuperKaren(Karen):
 
     def like_posts(self):
         for user, status in self._ids.items():
-            self._twitter_api.CreateFavorite(status_id=status)
+            # can't like your own posts...
+            if user != 'Karen Bot 💁🏼':
+                self._twitter_api.CreateFavorite(status_id=status)
 
     def comment_on_posts(self, tweet):
-        for user_id, status in self._ids.items():
-            self._twitter_api.PostUpdate(tweet,
-                                         in_reply_to_status_id=status,
-                                         auto_populate_reply_metadata=True)
+        for user, status in self._ids.items():
+            # can't like your own posts...
+            if user != 'Karen Bot 💁🏼':
+                self._twitter_api.PostUpdate(tweet,
+                                             in_reply_to_status_id=status,
+                                             auto_populate_reply_metadata=True)
 
     @classmethod
     def comment_message(cls):
